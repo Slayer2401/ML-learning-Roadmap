@@ -79,6 +79,41 @@
     display: flex; gap: 32px; flex-wrap: wrap;
     margin-top: 36px;
   }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .primary-action,
+  .secondary-action {
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 11px 15px;
+    text-decoration: none;
+    transition: border-color .2s, color .2s, transform .2s, background .2s;
+  }
+  .primary-action {
+    background: var(--accent2);
+    border: 1px solid var(--accent2);
+    color: #041015;
+  }
+  .secondary-action {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .primary-action:hover,
+  .secondary-action:hover {
+    transform: translateY(-1px);
+  }
+  .secondary-action:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
   .meta-pill {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -94,6 +129,36 @@
 
   section { padding: 56px 0; border-bottom: 1px solid var(--border); }
   section:last-child { border-bottom: none; }
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .dash-card {
+    background: rgba(26,26,36,.82);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .dash-label {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+  .dash-value {
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 6px;
+  }
+  .dash-wide {
+    grid-column: span 2;
+  }
 
   .section-label {
     font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
@@ -216,6 +281,31 @@
   .wk2 ul li::before { color: var(--w2); }
   .wk3 ul li::before { color: var(--w3); }
   .wk4 ul li::before { color: var(--w4); }
+  .week-progress {
+    margin-top: 16px;
+  }
+  .week-progress-label {
+    color: var(--muted);
+    display: flex;
+    font-size: 11px;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .week-progress-track {
+    background: rgba(255,255,255,.07);
+    border-radius: 999px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .week-progress-fill {
+    height: 100%;
+    width: 0%;
+    transition: width .35s ease;
+  }
+  .wk1 .week-progress-fill { background: var(--w1); }
+  .wk2 .week-progress-fill { background: var(--w2); }
+  .wk3 .week-progress-fill { background: var(--w3); }
+  .wk4 .week-progress-fill { background: var(--w4); }
 
   /* ── WEEK TABS ── */
   .tab-bar {
@@ -266,7 +356,11 @@
     border-color: var(--accent3);
     box-shadow: 0 0 0 1px rgba(245,158,11,.35);
   }
+  .day-card.done {
+    border-color: rgba(16,185,129,.5);
+  }
   .day-card.is-hidden { display: none; }
+  .day-card.collapsed .day-body { display: none; }
   .w1-card:hover { border-color: rgba(124,58,237,.5); }
   .w2-card:hover { border-color: rgba(6,182,212,.5); }
   .w3-card:hover { border-color: rgba(245,158,11,.5); }
@@ -274,7 +368,7 @@
 
   .day-header {
     padding: 14px 20px;
-    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   }
   .w1-card .day-header { background: rgba(124,58,237,.12); }
   .w2-card .day-header { background: rgba(6,182,212,.12); }
@@ -303,6 +397,32 @@
     padding: 2px 7px;
     white-space: nowrap;
   }
+  .day-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1;
+    margin-left: 4px;
+  }
+  .day-toggle:hover,
+  .day-toggle:focus-visible {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    outline: none;
+  }
+  .completion-chip {
+    border: 1px solid rgba(16,185,129,.35);
+    border-radius: 4px;
+    color: var(--accent4);
+    font-size: 10px;
+    padding: 2px 7px;
+    text-transform: uppercase;
+  }
   .day-body { padding: 16px 20px; }
   .day-section { margin-bottom: 12px; }
   .day-section:last-child { margin-bottom: 0; }
@@ -329,6 +449,34 @@
     gap: 12px;
     align-items: end;
     margin-bottom: 24px;
+  }
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -8px 0 20px;
+  }
+  .filter-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 7px 11px;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .filter-chip:hover,
+  .filter-chip:focus-visible {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    outline: none;
+  }
+  .filter-chip.active {
+    background: rgba(6,182,212,.12);
+    border-color: rgba(6,182,212,.55);
+    color: var(--accent2);
   }
   .field {
     display: flex;
@@ -646,6 +794,9 @@
     color: var(--text); transition: all .2s;
   }
   .top-nav .theme-toggle:hover { border-color: var(--accent2); }
+  .mobile-quickbar {
+    display: none;
+  }
 
   /* ── SCROLL PROGRESS ── */
   .scroll-progress {
@@ -724,6 +875,16 @@
     color: var(--muted); margin-top: 12px;
   }
   .progress-summary span { color: var(--accent4); font-weight: 500; }
+  .milestone-message {
+    background: rgba(16,185,129,.08);
+    border: 1px solid rgba(16,185,129,.28);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 12.5px;
+    margin-top: 14px;
+    padding: 12px 14px;
+  }
+  .milestone-message strong { color: var(--accent4); }
   .progress-bar-bg {
     height: 6px; background: var(--surface2); border-radius: 3px;
     margin-top: 10px; overflow: hidden;
@@ -759,6 +920,8 @@
       radial-gradient(ellipse 40% 40% at 10% 80%, rgba(6,182,212,.08) 0%, transparent 55%);
   }
   body.light .hero h1 { color: #1a1a2e; }
+  body.light .dash-card { background: rgba(255,255,255,.82); }
+  body.light .dash-value { color: #1a1a2e; }
   body.light .day-title { color: #1a1a2e; }
   body.light .top-nav { background: rgba(245,245,247,.92); }
   body.light .code-block { background: #1a1a2e; }
@@ -766,6 +929,9 @@
   body.light .cp-content h5 { color: #1a1a2e; }
 
   @media (max-width: 720px) {
+    body {
+      padding-bottom: 64px;
+    }
     .top-nav {
       flex-wrap: wrap;
       gap: 2px;
@@ -779,11 +945,62 @@
       margin-left: 0;
       margin-right: auto;
     }
+    .mobile-quickbar {
+      align-items: center;
+      background: rgba(10,10,15,.94);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      bottom: 0;
+      display: grid;
+      gap: 6px;
+      grid-template-columns: repeat(3, 1fr);
+      left: 0;
+      padding: 8px 10px;
+      position: fixed;
+      right: 0;
+      z-index: 190;
+    }
+    .mobile-quickbar button,
+    .mobile-quickbar a {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 9px 8px;
+      text-align: center;
+      text-decoration: none;
+    }
+    .mobile-quickbar button:focus-visible,
+    .mobile-quickbar a:focus-visible {
+      border-color: var(--accent2);
+      outline: 2px solid var(--accent2);
+      outline-offset: 2px;
+    }
+    body.light .mobile-quickbar {
+      background: rgba(245,245,247,.94);
+    }
     .hero {
       padding: 48px 20px 40px;
     }
+    .hero-actions {
+      flex-direction: column;
+    }
+    .primary-action,
+    .secondary-action {
+      text-align: center;
+      width: 100%;
+    }
     .container {
       padding: 0 20px;
+    }
+    .dashboard {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .dash-wide {
+      grid-column: span 2;
     }
     .tab-bar {
       overflow-x: auto;
@@ -799,6 +1016,18 @@
     .schedule-tools {
       grid-template-columns: 1fr;
       align-items: stretch;
+    }
+    .filter-row {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .filter-row::-webkit-scrollbar {
+      display: none;
+    }
+    .filter-chip {
+      flex: 0 0 auto;
     }
     .day-time {
       margin-left: 0;
@@ -833,12 +1062,27 @@
 
   /* ── PRINT ── */
   @media print {
-    .top-nav, .scroll-progress, .tab-bar, .theme-toggle { display: none !important; }
+    .top-nav, .scroll-progress, .tab-bar, .theme-toggle, .schedule-tools, .filter-row, .progress-actions, .copy-code, .day-toggle, .hero-actions, .mobile-quickbar { display: none !important; }
     .week-panel { display: block !important; page-break-inside: avoid; }
     body { background: #fff; color: #111; font-size: 11px; }
     .hero { padding: 20px; }
     section { padding: 20px 0; }
-    .day-card { break-inside: avoid; }
+    .day-card { break-inside: avoid; background: #fff; border-color: #ccc; }
+    .day-card.collapsed .day-body { display: block; }
+    .day-section p,
+    .day-section li,
+    .resource-card p,
+    .dataset-card p,
+    .rubric-card p,
+    .portfolio-card p,
+    .deployment-card p,
+    .glossary-card p,
+    .quiz-card p,
+    .progress-summary,
+    .schedule-status { color: #333; }
+    .dashboard { grid-template-columns: repeat(3, 1fr); }
+    .dash-card, .setup-box, .resource-card, .dataset-card, .rubric-card, .portfolio-card, .deployment-card, .glossary-card, .quiz-card { background: #fff; border-color: #ccc; }
+    .dash-value, .section-title, .day-title, .cp-content h5 { color: #111; }
   }
 
   /* ── FOOTER ── */
@@ -874,6 +1118,12 @@
   <button class="theme-toggle" type="button" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌓</button>
 </nav>
 
+<div class="mobile-quickbar" aria-label="Quick actions">
+  <button type="button" data-continue-learning>Continue</button>
+  <a href="#progress">Progress</a>
+  <button type="button" data-theme-toggle>Theme</button>
+</div>
+
 <!-- HERO -->
 <div class="hero">
   <div class="container">
@@ -885,6 +1135,36 @@
       <div class="meta-pill"><strong>Daily time:</strong> 2–3 hours (+ optional weekends)</div>
       <div class="meta-pill"><strong>Target:</strong> Absolute Beginner</div>
       <div class="meta-pill"><strong>Stack:</strong> Python 3.11+ · scikit-learn 1.8</div>
+    </div>
+    <div class="hero-actions">
+      <button class="primary-action" type="button" data-continue-learning>Continue Learning</button>
+      <a class="secondary-action" href="#progress">Update Progress</a>
+    </div>
+    <div class="dashboard" aria-label="Learning dashboard">
+      <div class="dash-card">
+        <div class="dash-label">Current Day</div>
+        <div class="dash-value" id="dashCurrentDay">Day 1</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Completed</div>
+        <div class="dash-value" id="dashCompleted">0 / 28</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Remaining</div>
+        <div class="dash-value" id="dashRemaining">28 days</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Current Week</div>
+        <div class="dash-value" id="dashWeek">Week 1</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Today</div>
+        <div class="dash-value" id="dashTime">2h</div>
+      </div>
+      <div class="dash-card dash-wide">
+        <div class="dash-label">Next Task</div>
+        <div class="dash-value" id="dashNextTask">Python Jumpstart</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1028,6 +1308,14 @@ jupyter lab
         <input id="startDate" type="date">
       </div>
       <button class="tool-button" type="button" id="clearScheduleTools">Clear</button>
+    </div>
+    <div class="filter-row" aria-label="Schedule filters">
+      <button class="filter-chip active" type="button" data-filter="all">All days</button>
+      <button class="filter-chip" type="button" data-filter="incomplete">Incomplete</button>
+      <button class="filter-chip" type="button" data-filter="projects">Projects</button>
+      <button class="filter-chip" type="button" data-filter="reviews">Reviews</button>
+      <button class="filter-chip" type="button" data-filter="today">Today</button>
+      <button class="filter-chip" type="button" data-filter="compact">Compact cards</button>
     </div>
     <div class="schedule-status" id="scheduleStatus">Showing Week 1.</div>
 
@@ -1370,7 +1658,9 @@ jupyter lab
     <div class="progress-track" id="progressTrack"></div>
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
     <div class="progress-summary" id="progressSummary">Days completed: <span>0</span> / 28</div>
+    <div class="milestone-message" id="milestoneMessage">Start with Day 1 and keep the streak simple.</div>
     <div class="progress-actions" aria-label="Progress actions">
+      <button class="progress-action" type="button" data-continue-learning>Continue learning</button>
       <button class="progress-action" type="button" id="resetProgress">Reset progress</button>
       <button class="progress-action" type="button" id="exportProgress">Export progress</button>
       <button class="progress-action" type="button" id="exportChecklist">Export checklist</button>
@@ -1868,6 +2158,9 @@ shap==0.51.0
     return normalizeProgress(readJson(STORAGE_KEYS.progress, []));
   }
 
+  let progressDone = readProgress();
+  let scheduleFilter = 'all';
+
   function saveProgress(done) {
     try {
       localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(done));
@@ -1969,7 +2262,138 @@ shap==0.51.0
       time.textContent = dayTimePlan[day - 1] || '2h';
       header.appendChild(time);
     }
+    const body = card.querySelector('.day-body');
+    if (body && !body.id) body.id = 'day-body-' + day;
+    if (header && body && !header.querySelector('.day-toggle')) {
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'day-toggle';
+      toggle.textContent = '−';
+      toggle.setAttribute('aria-label', 'Collapse Day ' + day);
+      toggle.setAttribute('aria-controls', body.id);
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.addEventListener('click', () => setCardCollapsed(card, !card.classList.contains('collapsed')));
+      header.appendChild(toggle);
+    }
   });
+
+  function setCardCollapsed(card, isCollapsed) {
+    const day = Number(card.dataset.day || 0);
+    const toggle = card.querySelector('.day-toggle');
+    card.classList.toggle('collapsed', isCollapsed);
+    if (toggle) {
+      toggle.textContent = isCollapsed ? '+' : '−';
+      toggle.setAttribute('aria-expanded', String(!isCollapsed));
+      toggle.setAttribute('aria-label', (isCollapsed ? 'Expand' : 'Collapse') + ' Day ' + day);
+    }
+  }
+
+  function smoothScrollTo(target) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function nextIncompleteDay() {
+    for (let day = 1; day <= 28; day++) {
+      if (!progressDone.includes(day)) return day;
+    }
+    return 28;
+  }
+
+  function goToLearningDay(day = nextIncompleteDay()) {
+    const item = dayCards.find(entry => entry.day === day);
+    if (!item) return;
+    if (scheduleSearch) scheduleSearch.value = '';
+    scheduleFilter = 'all';
+    document.querySelectorAll('.filter-chip').forEach(button => {
+      button.classList.toggle('active', button.dataset.filter === 'all');
+    });
+    showWeek(Math.ceil(day / 7));
+    applyScheduleTools();
+    setCardCollapsed(item.card, false);
+    smoothScrollTo(item.card);
+    item.card.querySelector('.day-toggle')?.focus({ preventScroll: true });
+  }
+
+  function updateDashboard() {
+    const nextDay = nextIncompleteDay();
+    const nextItem = dayCards.find(item => item.day === nextDay) || dayCards[0];
+    const week = Math.ceil(nextDay / 7);
+    const remaining = Math.max(28 - progressDone.length, 0);
+    const currentDay = updateTodayHighlight() || nextDay;
+
+    const dashCurrentDay = document.getElementById('dashCurrentDay');
+    const dashCompleted = document.getElementById('dashCompleted');
+    const dashRemaining = document.getElementById('dashRemaining');
+    const dashWeek = document.getElementById('dashWeek');
+    const dashTime = document.getElementById('dashTime');
+    const dashNextTask = document.getElementById('dashNextTask');
+
+    if (dashCurrentDay) dashCurrentDay.textContent = 'Day ' + currentDay;
+    if (dashCompleted) dashCompleted.textContent = progressDone.length + ' / 28';
+    if (dashRemaining) dashRemaining.textContent = remaining + ' day' + (remaining === 1 ? '' : 's');
+    if (dashWeek) dashWeek.textContent = 'Week ' + week;
+    if (dashTime) dashTime.textContent = dayTimePlan[nextDay - 1] || '2h';
+    if (dashNextTask) dashNextTask.textContent = progressDone.length === 28 ? 'Course complete' : (nextItem?.title || 'Python Jumpstart');
+  }
+
+  function updateWeekProgress() {
+    document.querySelectorAll('.week-goal-card').forEach((card, index) => {
+      const week = index + 1;
+      const completed = progressDone.filter(day => Math.ceil(day / 7) === week).length;
+      let progress = card.querySelector('.week-progress');
+      if (!progress) {
+        progress = document.createElement('div');
+        progress.className = 'week-progress';
+        progress.innerHTML = '<div class="week-progress-label"><span>Progress</span><strong>0 / 7</strong></div><div class="week-progress-track"><div class="week-progress-fill"></div></div>';
+        card.appendChild(progress);
+      }
+      const label = progress.querySelector('strong');
+      const fill = progress.querySelector('.week-progress-fill');
+      if (label) label.textContent = completed + ' / 7';
+      if (fill) fill.style.width = Math.round((completed / 7) * 100) + '%';
+      card.classList.toggle('complete', completed === 7);
+    });
+  }
+
+  function updateDayCompletionStates() {
+    dayCards.forEach(({ card, day }) => {
+      const isDone = progressDone.includes(day);
+      card.classList.toggle('done', isDone);
+      let chip = card.querySelector('.completion-chip');
+      if (isDone && !chip) {
+        chip = document.createElement('span');
+        chip.className = 'completion-chip';
+        chip.textContent = 'Done';
+        card.querySelector('.day-header')?.appendChild(chip);
+      } else if (!isDone && chip) {
+        chip.remove();
+      }
+    });
+  }
+
+  function updateMilestoneMessage() {
+    const milestone = document.getElementById('milestoneMessage');
+    if (!milestone) return;
+    const completedWeeks = [1, 2, 3, 4].filter(week =>
+      Array.from({ length: 7 }, (_, i) => (week - 1) * 7 + i + 1).every(day => progressDone.includes(day))
+    );
+    if (progressDone.length === 28) {
+      milestone.innerHTML = '<strong>Course complete.</strong> Your first ML learning sprint is finished.';
+    } else if (completedWeeks.length) {
+      const latest = completedWeeks[completedWeeks.length - 1];
+      milestone.innerHTML = '<strong>Week ' + latest + ' complete.</strong> Next stop: Day ' + nextIncompleteDay() + '.';
+    } else {
+      milestone.innerHTML = '<strong>' + progressDone.length + ' day' + (progressDone.length === 1 ? '' : 's') + ' complete.</strong> Next stop: Day ' + nextIncompleteDay() + '.';
+    }
+  }
+
+  function refreshProgressUI() {
+    updateDayCompletionStates();
+    updateWeekProgress();
+    updateDashboard();
+    updateMilestoneMessage();
+  }
 
   document.querySelectorAll('.code-block').forEach((block, index) => {
     const button = document.createElement('button');
@@ -2013,6 +2437,7 @@ shap==0.51.0
   const startDateInput = document.getElementById('startDate');
   const clearScheduleTools = document.getElementById('clearScheduleTools');
   const scheduleStatus = document.getElementById('scheduleStatus');
+  const filterButtons = Array.from(document.querySelectorAll('.filter-chip'));
 
   function currentActiveWeek() {
     return Number(document.querySelector('.tab-btn.active')?.dataset.w || '1');
@@ -2037,27 +2462,58 @@ shap==0.51.0
     const query = (scheduleSearch?.value || '').trim().toLowerCase();
     let matches = 0;
 
-    dayCards.forEach(({ card }) => {
-      const isMatch = !query || card.textContent.toLowerCase().includes(query);
+    const todayDay = updateTodayHighlight();
+
+    dayCards.forEach(({ card, day }) => {
+      const text = card.textContent.toLowerCase();
+      const isQueryMatch = !query || text.includes(query);
+      const isFilterMatch =
+        scheduleFilter === 'all' ||
+        scheduleFilter === 'compact' ||
+        (scheduleFilter === 'incomplete' && !progressDone.includes(day)) ||
+        (scheduleFilter === 'projects' && !!card.querySelector('.ds-project')) ||
+        (scheduleFilter === 'reviews' && !!card.querySelector('.ds-review, .ds-check')) ||
+        (scheduleFilter === 'today' && todayDay === day);
+      const isMatch = isQueryMatch && isFilterMatch;
       card.classList.toggle('is-hidden', !isMatch);
       if (isMatch) matches++;
     });
 
-    if (query) {
+    if (query || scheduleFilter !== 'all') {
       document.querySelectorAll('.week-panel').forEach(panel => {
         panel.classList.add('active');
         panel.hidden = false;
       });
-      if (scheduleStatus) scheduleStatus.textContent = matches + ' day' + (matches === 1 ? '' : 's') + ' match "' + query + '".';
+      const filterLabel = filterButtons.find(button => button.dataset.filter === scheduleFilter)?.textContent || 'filtered';
+      const queryText = query ? ' for "' + query + '"' : '';
+      if (scheduleStatus) scheduleStatus.textContent = matches + ' day' + (matches === 1 ? '' : 's') + ' shown: ' + filterLabel + queryText + '.';
     } else {
       showWeek(currentActiveWeek());
       if (scheduleStatus) scheduleStatus.textContent = 'Showing Week ' + currentActiveWeek() + '.';
     }
 
-    updateTodayHighlight();
+    refreshProgressUI();
   }
 
   scheduleSearch?.addEventListener('input', applyScheduleTools);
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      scheduleFilter = button.dataset.filter || 'all';
+      filterButtons.forEach(item => item.classList.toggle('active', item === button));
+      if (scheduleFilter === 'compact') {
+        const shouldCollapse = dayCards.some(({ card }) => !card.classList.contains('collapsed'));
+        dayCards.forEach(({ card }) => setCardCollapsed(card, shouldCollapse));
+      }
+      applyScheduleTools();
+    });
+  });
+  document.querySelectorAll('[data-continue-learning]').forEach(button => {
+    button.addEventListener('click', () => goToLearningDay());
+  });
+  if (window.matchMedia('(max-width: 720px)').matches) {
+    const nextDay = nextIncompleteDay();
+    dayCards.forEach(({ card, day }) => setCardCollapsed(card, day !== nextDay));
+  }
   startDateInput?.addEventListener('change', () => {
     try {
       if (startDateInput.value) localStorage.setItem(STORAGE_KEYS.startDate, startDateInput.value);
@@ -2066,6 +2522,7 @@ shap==0.51.0
       // Start date highlighting still works for the current view.
     }
     const dayNumber = updateTodayHighlight();
+    refreshProgressUI();
     if (dayNumber && !scheduleSearch?.value) {
       showWeek(Math.ceil(dayNumber / 7));
       if (scheduleStatus) scheduleStatus.textContent = 'Showing Day ' + dayNumber + '.';
@@ -2074,6 +2531,8 @@ shap==0.51.0
   clearScheduleTools?.addEventListener('click', () => {
     if (scheduleSearch) scheduleSearch.value = '';
     if (startDateInput) startDateInput.value = '';
+    scheduleFilter = 'all';
+    filterButtons.forEach(button => button.classList.toggle('active', button.dataset.filter === 'all'));
     try { localStorage.removeItem(STORAGE_KEYS.startDate); } catch {}
     applyScheduleTools();
   });
@@ -2115,6 +2574,9 @@ shap==0.51.0
   }
 
   document.querySelector('.theme-toggle')?.addEventListener('click', toggleTheme);
+  document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+    button.addEventListener('click', toggleTheme);
+  });
 
   (function initProgressTracker() {
     const track = document.getElementById('progressTrack');
@@ -2127,7 +2589,7 @@ shap==0.51.0
     const importInput = document.getElementById('importProgress');
     if (!track || !fill || !summary) return;
 
-    let done = readProgress();
+    let done = progressDone;
     const dayButtons = [];
 
     function setDayState(button, day) {
@@ -2138,10 +2600,13 @@ shap==0.51.0
     }
 
     function update() {
+      progressDone = normalizeProgress(done);
+      done = progressDone;
       const pct = Math.round((done.length / 28) * 100);
       fill.style.width = pct + '%';
       summary.innerHTML = 'Days completed: <span>' + done.length + '</span> / 28 — ' + pct + '% done';
       dayButtons.forEach((button, index) => setDayState(button, index + 1));
+      applyScheduleTools();
     }
 
     for (let i = 1; i <= 28; i++) {
@@ -2249,7 +2714,7 @@ shap==0.51.0
     showWeek(Number(activeWeek));
   });
 
-  document.querySelectorAll('.top-nav a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', event => {
       event.preventDefault();
       const target = document.querySelector(anchor.getAttribute('href'));
