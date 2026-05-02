@@ -165,6 +165,11 @@
   .code-block .comment { color: #4b5563; }
   .code-block .kw { color: #c084fc; }
   .code-block .str { color: #86efac; }
+  .copy-code {
+    margin: 0 0 8px auto;
+    display: block;
+    padding: 7px 10px;
+  }
 
   /* ── WEEKLY GOALS ── */
   .week-goals-grid {
@@ -226,6 +231,11 @@
     margin-bottom: -1px; transition: all .2s;
   }
   .tab-btn:hover { color: var(--text); }
+  .tab-btn:focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
   .tab-btn.active { color: #fff; }
   .tab-btn[data-w="1"].active { border-color: var(--w1); color: var(--w1); }
   .tab-btn[data-w="2"].active { border-color: var(--w2); color: var(--w2); }
@@ -252,6 +262,11 @@
   .day-card:hover {
     transform: translateY(-2px);
   }
+  .day-card.today {
+    border-color: var(--accent3);
+    box-shadow: 0 0 0 1px rgba(245,158,11,.35);
+  }
+  .day-card.is-hidden { display: none; }
   .w1-card:hover { border-color: rgba(124,58,237,.5); }
   .w2-card:hover { border-color: rgba(6,182,212,.5); }
   .w3-card:hover { border-color: rgba(245,158,11,.5); }
@@ -259,7 +274,7 @@
 
   .day-header {
     padding: 14px 20px;
-    display: flex; align-items: baseline; gap: 10px;
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
   }
   .w1-card .day-header { background: rgba(124,58,237,.12); }
   .w2-card .day-header { background: rgba(6,182,212,.12); }
@@ -278,6 +293,15 @@
   .day-title {
     font-family: 'Syne', sans-serif;
     font-size: 14px; font-weight: 700; color: #fff;
+  }
+  .day-time {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--accent3);
+    border: 1px solid rgba(245,158,11,.24);
+    border-radius: 4px;
+    padding: 2px 7px;
+    white-space: nowrap;
   }
   .day-body { padding: 16px 20px; }
   .day-section { margin-bottom: 12px; }
@@ -298,6 +322,86 @@
   .day-section ul { list-style: none; }
   .day-section ul li { padding-left: 12px; position: relative; }
   .day-section ul li::before { content: '·'; position: absolute; left: 0; color: var(--border); }
+
+  .schedule-tools {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) auto auto;
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 24px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+  }
+  .field input,
+  .day-note textarea,
+  .import-file {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font: inherit;
+    padding: 9px 11px;
+  }
+  .field input:focus-visible,
+  .day-note textarea:focus-visible,
+  .import-file:focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
+  }
+  .tool-button,
+  .copy-code {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 9px 12px;
+    transition: border-color .2s, color .2s;
+  }
+  .tool-button:hover,
+  .copy-code:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+  .tool-button:focus-visible,
+  .copy-code:focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
+  }
+  .schedule-status {
+    color: var(--muted);
+    font-size: 12px;
+    margin: -12px 0 20px;
+  }
+  .day-note {
+    border-top: 1px solid rgba(42,42,56,.7);
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+  .day-note label {
+    display: block;
+    color: var(--accent2);
+    font-size: 10px;
+    letter-spacing: .15em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .day-note textarea {
+    min-height: 68px;
+    resize: vertical;
+    width: 100%;
+  }
 
   /* ── TOPICS TABLE ── */
   .topics-table {
@@ -369,11 +473,129 @@
     font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
     color: var(--text); margin-bottom: 4px;
   }
+  .resource-card h5 a {
+    color: inherit; text-decoration: none;
+  }
+  .resource-card h5 a:hover,
+  .resource-card h5 a:focus-visible {
+    color: var(--accent2); text-decoration: underline;
+    text-underline-offset: 3px;
+  }
   .resource-card p { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
   .resource-time {
     font-size: 11px; color: var(--accent3);
     padding: 3px 8px; background: rgba(245,158,11,.1);
-    border-radius: 3px; display: inline-block;
+    border-radius: 3px; display: inline-block; margin-right: 6px;
+  }
+  .resource-difficulty {
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .diff-beginner { background: rgba(16,185,129,.12); color: #6ee7b7; }
+  .diff-intermediate { background: rgba(6,182,212,.12); color: #67e8f9; }
+  .diff-optional { background: rgba(124,58,237,.14); color: #c4b5fd; }
+  .diff-deep { background: rgba(245,158,11,.12); color: #fcd34d; }
+  .dataset-grid,
+  .rubric-grid,
+  .portfolio-grid,
+  .deployment-grid,
+  .glossary-grid,
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .dataset-card,
+  .rubric-card,
+  .portfolio-card,
+  .deployment-card,
+  .glossary-card,
+  .quiz-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .dataset-card h5,
+  .rubric-card h5,
+  .portfolio-card h5,
+  .deployment-card h5,
+  .glossary-card h5,
+  .quiz-card h5 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .dataset-card p,
+  .rubric-card p,
+  .portfolio-card p,
+  .deployment-card p,
+  .glossary-card p,
+  .quiz-card p {
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .dataset-card a,
+  .deployment-card a {
+    color: var(--accent2);
+    display: inline-block;
+    font-size: 12px;
+    margin-top: 10px;
+    text-decoration: none;
+  }
+  .dataset-card a:hover,
+  .deployment-card a:hover,
+  .dataset-card a:focus-visible,
+  .deployment-card a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .rubric-card ul,
+  .portfolio-card ul,
+  .deployment-card ul {
+    list-style: none;
+  }
+  .rubric-card li,
+  .portfolio-card li,
+  .deployment-card li {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    padding-left: 14px;
+    position: relative;
+  }
+  .rubric-card li::before,
+  .portfolio-card li::before,
+  .deployment-card li::before {
+    content: '·';
+    color: var(--accent2);
+    left: 0;
+    position: absolute;
+  }
+  .quiz-card details {
+    border-top: 1px solid rgba(42,42,56,.7);
+    padding: 9px 0;
+  }
+  .quiz-card details:first-of-type {
+    border-top: none;
+  }
+  .quiz-card summary {
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12.5px;
+  }
+  .quiz-card details p {
+    margin-top: 8px;
+  }
+  .import-file {
+    display: none;
   }
 
   /* ── GROWTH PATH ── */
@@ -483,8 +705,17 @@
     font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
     cursor: pointer; transition: all .2s; user-select: none;
     background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+    appearance: none; line-height: 1;
   }
   .progress-day:hover { border-color: var(--accent2); }
+  .progress-day:focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
+  }
+  .progress-day.today {
+    border-color: var(--accent3);
+    color: var(--accent3);
+  }
   .progress-day.done {
     background: rgba(16,185,129,.2); border-color: var(--accent4); color: var(--accent4);
   }
@@ -500,6 +731,21 @@
   .progress-bar-fill {
     height: 100%; border-radius: 3px; transition: width .4s ease;
     background: linear-gradient(90deg, var(--w1), var(--w2), var(--w3), var(--w4));
+  }
+  .progress-actions {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 16px;
+  }
+  .progress-action {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text); cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    padding: 8px 12px; transition: border-color .2s, color .2s;
+  }
+  .progress-action:hover { border-color: var(--accent2); color: var(--accent2); }
+  .progress-action:focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
   }
 
   /* ── LIGHT THEME ── */
@@ -518,6 +764,72 @@
   body.light .code-block { background: #1a1a2e; }
   body.light .section-title { color: #1a1a2e; }
   body.light .cp-content h5 { color: #1a1a2e; }
+
+  @media (max-width: 720px) {
+    .top-nav {
+      flex-wrap: wrap;
+      gap: 2px;
+      padding: 8px 16px;
+    }
+    .top-nav a {
+      padding: 8px 10px;
+      font-size: 10px;
+    }
+    .top-nav .theme-toggle {
+      margin-left: 0;
+      margin-right: auto;
+    }
+    .hero {
+      padding: 48px 20px 40px;
+    }
+    .container {
+      padding: 0 20px;
+    }
+    .tab-bar {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .tab-btn {
+      flex: 0 0 auto;
+      padding: 10px 16px;
+    }
+    .schedule-tools {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+    .day-time {
+      margin-left: 0;
+    }
+    .day-grid,
+    .activities-grid,
+    .resource-grid,
+    .dataset-grid,
+    .rubric-grid,
+    .portfolio-grid,
+    .deployment-grid,
+    .glossary-grid,
+    .quiz-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: .01ms !important;
+    }
+    .day-card:hover,
+    .activity-card:hover {
+      transform: none;
+    }
+  }
 
   /* ── PRINT ── */
   @media print {
@@ -552,22 +864,27 @@
   <a href="#activities">Activities</a>
   <a href="#progress">Progress</a>
   <a href="#assessment">Assessment</a>
+  <a href="#datasets">Datasets</a>
+  <a href="#quizzes">Quizzes</a>
   <a href="#resources">Resources</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#deploy">Deploy</a>
+  <a href="#glossary">Glossary</a>
   <a href="#growth">Growth</a>
-  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌓</button>
+  <button class="theme-toggle" type="button" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌓</button>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="container">
-    <div class="hero-label">// 28-day curriculum · zero to ml practitioner</div>
+    <div class="hero-label">// 28-day curriculum · first ml prototype</div>
     <h1>Machine Learning<br><span>Zero to Hero</span></h1>
     <p class="hero-sub">A complete day-by-day roadmap from Python basics to your first working ML models — no experience required.</p>
     <div class="hero-meta">
       <div class="meta-pill"><strong>Duration:</strong> 4 Weeks · 28 Days</div>
       <div class="meta-pill"><strong>Daily time:</strong> 2–3 hours (+ optional weekends)</div>
       <div class="meta-pill"><strong>Target:</strong> Absolute Beginner</div>
-      <div class="meta-pill"><strong>Stack:</strong> Python 3.11 · scikit-learn 1.4</div>
+      <div class="meta-pill"><strong>Stack:</strong> Python 3.11+ · scikit-learn 1.8</div>
     </div>
   </div>
 </div>
@@ -628,8 +945,8 @@ python -m venv ml_env
 source ml_env/bin/activate        <span class="comment"># Mac/Linux</span>
 ml_env\Scripts\activate           <span class="comment"># Windows</span>
 
-<span class="comment"># Step 2: Install all required packages (pinned versions)</span>
-pip install numpy==1.26.4 pandas==2.2.1 matplotlib==3.8.3 seaborn==0.13.2 scikit-learn==1.4.1 jupyterlab==4.1.5
+<span class="comment"># Step 2: Install all required packages (current starter pins, checked May 2026)</span>
+pip install numpy==2.4.4 pandas==3.0.2 matplotlib==3.10.8 seaborn==0.13.2 scikit-learn==1.8.0 jupyterlab==4.5.6
 
 <span class="comment"># Step 3: Verify installation</span>
 python -c <span class="str">"import numpy, pandas, sklearn; print('All good!')"</span>
@@ -701,15 +1018,28 @@ jupyter lab
     <div class="section-label">// day-by-day</div>
     <div class="section-title">Daily Schedule</div>
 
-    <div class="tab-bar">
-      <button class="tab-btn active" data-w="1" onclick="showWeek(1)">Week 1</button>
-      <button class="tab-btn" data-w="2" onclick="showWeek(2)">Week 2</button>
-      <button class="tab-btn" data-w="3" onclick="showWeek(3)">Week 3</button>
-      <button class="tab-btn" data-w="4" onclick="showWeek(4)">Week 4</button>
+    <div class="schedule-tools" aria-label="Schedule tools">
+      <div class="field">
+        <label for="scheduleSearch">Search Schedule</label>
+        <input id="scheduleSearch" type="search" placeholder="Pandas, Random Forest, EDA, pipeline">
+      </div>
+      <div class="field">
+        <label for="startDate">Start Date</label>
+        <input id="startDate" type="date">
+      </div>
+      <button class="tool-button" type="button" id="clearScheduleTools">Clear</button>
+    </div>
+    <div class="schedule-status" id="scheduleStatus">Showing Week 1.</div>
+
+    <div class="tab-bar" role="tablist" aria-label="Daily schedule weeks">
+      <button class="tab-btn active" id="tab-week1" data-w="1" type="button" role="tab" aria-selected="true" aria-controls="week1" tabindex="0">Week 1</button>
+      <button class="tab-btn" id="tab-week2" data-w="2" type="button" role="tab" aria-selected="false" aria-controls="week2" tabindex="-1">Week 2</button>
+      <button class="tab-btn" id="tab-week3" data-w="3" type="button" role="tab" aria-selected="false" aria-controls="week3" tabindex="-1">Week 3</button>
+      <button class="tab-btn" id="tab-week4" data-w="4" type="button" role="tab" aria-selected="false" aria-controls="week4" tabindex="-1">Week 4</button>
     </div>
 
     <!-- WEEK 1 -->
-    <div class="week-panel active" id="week1">
+    <div class="week-panel active" id="week1" role="tabpanel" aria-labelledby="tab-week1">
       <div class="day-grid">
 
         <div class="day-card w1-card">
@@ -779,7 +1109,7 @@ jupyter lab
     </div>
 
     <!-- WEEK 2 -->
-    <div class="week-panel" id="week2">
+    <div class="week-panel" id="week2" role="tabpanel" aria-labelledby="tab-week2" hidden>
       <div class="day-grid">
 
         <div class="day-card w2-card">
@@ -849,7 +1179,7 @@ jupyter lab
     </div>
 
     <!-- WEEK 3 -->
-    <div class="week-panel" id="week3">
+    <div class="week-panel" id="week3" role="tabpanel" aria-labelledby="tab-week3" hidden>
       <div class="day-grid">
 
         <div class="day-card w3-card">
@@ -919,7 +1249,7 @@ jupyter lab
     </div>
 
     <!-- WEEK 4 -->
-    <div class="week-panel" id="week4">
+    <div class="week-panel" id="week4" role="tabpanel" aria-labelledby="tab-week4" hidden>
       <div class="day-grid">
 
         <div class="day-card w4-card">
@@ -980,7 +1310,7 @@ jupyter lab
           <div class="day-body">
             <div class="day-section ds-review"><div class="ds-label">Final Review</div><p>Polish capstone notebook. Add markdown cells explaining each decision. Write a README.md for your GitHub portfolio.</p></div>
             <div class="day-section ds-check"><div class="ds-label">Final Checkpoint</div><ul><li>Can you build a full ML pipeline from scratch?</li><li>Can you choose the right algorithm for a problem?</li><li>Can you explain your model's performance to a non-technical person?</li><li>Do you have 3+ projects to show?</li></ul></div>
-            <div class="day-section ds-project"><div class="ds-label">Celebrate 🎉</div><p>Push everything to GitHub. You just went from zero to ML practitioner in 28 days.</p></div>
+            <div class="day-section ds-project"><div class="ds-label">Celebrate 🎉</div><p>Push everything to GitHub. You just built your first end-to-end ML prototype in 28 days.</p></div>
           </div>
         </div>
 
@@ -1040,6 +1370,13 @@ jupyter lab
     <div class="progress-track" id="progressTrack"></div>
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
     <div class="progress-summary" id="progressSummary">Days completed: <span>0</span> / 28</div>
+    <div class="progress-actions" aria-label="Progress actions">
+      <button class="progress-action" type="button" id="resetProgress">Reset progress</button>
+      <button class="progress-action" type="button" id="exportProgress">Export progress</button>
+      <button class="progress-action" type="button" id="exportChecklist">Export checklist</button>
+      <button class="progress-action" type="button" id="importProgressButton">Import progress</button>
+      <input class="import-file" type="file" id="importProgress" accept="application/json,.json">
+    </div>
   </div>
 </section>
 
@@ -1149,6 +1486,46 @@ jupyter lab
   </div>
 </section>
 
+<!-- DATASETS -->
+<section id="datasets">
+  <div class="container">
+    <div class="section-label">// practice data</div>
+    <div class="section-title">Beginner Dataset Links</div>
+    <div class="dataset-grid">
+      <div class="dataset-card">
+        <h5>Titanic Survival</h5>
+        <p>Classification practice for Pandas, EDA, missing values, and logistic regression.</p>
+        <a href="https://www.kaggle.com/competitions/titanic" target="_blank" rel="noopener noreferrer">Open dataset</a>
+      </div>
+      <div class="dataset-card">
+        <h5>House Prices</h5>
+        <p>Regression practice for feature engineering, validation, residuals, and pipelines.</p>
+        <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques" target="_blank" rel="noopener noreferrer">Open dataset</a>
+      </div>
+      <div class="dataset-card">
+        <h5>SMS Spam Collection</h5>
+        <p>Text classification practice for CountVectorizer, precision, recall, and confusion matrices.</p>
+        <a href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection" target="_blank" rel="noopener noreferrer">Open dataset</a>
+      </div>
+      <div class="dataset-card">
+        <h5>Digit Recognizer</h5>
+        <p>Image-style tabular practice for PCA, model comparison, and multiclass classification.</p>
+        <a href="https://www.kaggle.com/competitions/digit-recognizer" target="_blank" rel="noopener noreferrer">Open dataset</a>
+      </div>
+      <div class="dataset-card">
+        <h5>Telco Customer Churn</h5>
+        <p>Capstone-ready classification data with categorical features, imbalance, and business framing.</p>
+        <a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn" target="_blank" rel="noopener noreferrer">Open dataset</a>
+      </div>
+      <div class="dataset-card">
+        <h5>scikit-learn Toy Datasets</h5>
+        <p>Built-in Iris, Wine, Breast Cancer, Diabetes, and Digits datasets for fast local experiments.</p>
+        <a href="https://scikit-learn.org/stable/datasets/toy_dataset.html" target="_blank" rel="noopener noreferrer">Open docs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ASSESSMENT -->
 <section id="assessment">
   <div class="container">
@@ -1187,6 +1564,74 @@ jupyter lab
   </div>
 </section>
 
+<!-- QUIZZES -->
+<section id="quizzes">
+  <div class="container">
+    <div class="section-label">// self-checks</div>
+    <div class="section-title">Weekly Mini Quizzes</div>
+    <div class="quiz-grid">
+      <div class="quiz-card">
+        <h5>Week 1 Quiz</h5>
+        <details><summary>What is the difference between a list and a dictionary?</summary><p>A list stores ordered values by position; a dictionary stores values by named keys.</p></details>
+        <details><summary>Why use NumPy instead of plain Python lists for numeric work?</summary><p>NumPy arrays support vectorized operations and efficient storage for large numeric data.</p></details>
+        <details><summary>What does `df.info()` tell you?</summary><p>Column names, non-null counts, data types, and memory usage.</p></details>
+        <details><summary>Which chart is best for a single numeric distribution?</summary><p>A histogram or boxplot.</p></details>
+        <details><summary>What is EDA trying to uncover?</summary><p>Data shape, quality issues, patterns, relationships, and questions worth modeling.</p></details>
+      </div>
+      <div class="quiz-card">
+        <h5>Week 2 Quiz</h5>
+        <details><summary>Regression or classification: predicting house price?</summary><p>Regression, because the target is a continuous number.</p></details>
+        <details><summary>Why split data into train and test sets?</summary><p>To estimate how well the model handles unseen data.</p></details>
+        <details><summary>What does a confusion matrix show?</summary><p>Counts of correct and incorrect predictions by class.</p></details>
+        <details><summary>Why scale numeric features?</summary><p>Some algorithms compare distances or optimize coefficients, so feature scale can dominate behavior.</p></details>
+        <details><summary>What is data leakage?</summary><p>When training uses information that would not be available at prediction time.</p></details>
+      </div>
+      <div class="quiz-card">
+        <h5>Week 3 Quiz</h5>
+        <details><summary>Why can decision trees overfit?</summary><p>Deep trees can memorize training-specific splits instead of learning general patterns.</p></details>
+        <details><summary>How does a random forest reduce variance?</summary><p>It averages many different trees trained on bootstrapped data and random feature subsets.</p></details>
+        <details><summary>What does k-fold cross-validation estimate?</summary><p>Model performance across multiple train/validation splits.</p></details>
+        <details><summary>Give one example of feature engineering.</summary><p>Creating a family-size feature from sibling, spouse, parent, and child counts.</p></details>
+        <details><summary>What is clustering used for?</summary><p>Finding groups or structure when labels are not provided.</p></details>
+      </div>
+      <div class="quiz-card">
+        <h5>Week 4 Quiz</h5>
+        <details><summary>What does GridSearchCV do?</summary><p>It tries parameter combinations with cross-validation and reports the best scoring setup.</p></details>
+        <details><summary>Why use a Pipeline?</summary><p>It keeps preprocessing and modeling together so training, validation, and prediction are consistent.</p></details>
+        <details><summary>What should be saved with a trained model?</summary><p>The full pipeline, package versions, evaluation metrics, and usage notes.</p></details>
+        <details><summary>When might SVMs work well?</summary><p>On smaller, well-scaled datasets where the decision boundary is not simple.</p></details>
+        <details><summary>What does PCA trade away?</summary><p>Some interpretability and detail in exchange for fewer dimensions.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RUBRICS -->
+<section id="rubrics">
+  <div class="container">
+    <div class="section-label">// grading guides</div>
+    <div class="section-title">Project Rubrics</div>
+    <div class="rubric-grid">
+      <div class="rubric-card">
+        <h5>EDA Rubric</h5>
+        <ul><li>Loads data cleanly and documents shape</li><li>Checks nulls, duplicates, and data types</li><li>Includes 4 relevant charts with labels</li><li>Ends with 5 concrete observations</li></ul>
+      </div>
+      <div class="rubric-card">
+        <h5>Modeling Rubric</h5>
+        <ul><li>Uses a proper train/test split</li><li>Fits at least 2 baseline models</li><li>Uses metrics suited to the problem</li><li>Explains why the final model was chosen</li></ul>
+      </div>
+      <div class="rubric-card">
+        <h5>Evaluation Rubric</h5>
+        <ul><li>Reports validation and test results separately</li><li>Includes confusion matrix or residual plot</li><li>Names likely error sources</li><li>States one next experiment</li></ul>
+      </div>
+      <div class="rubric-card">
+        <h5>Capstone Rubric</h5>
+        <ul><li>Notebook runs from top to bottom</li><li>Pipeline handles preprocessing</li><li>Saved model can be loaded again</li><li>README explains problem, data, result, and limits</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- RESOURCES -->
 <section id="resources">
   <div class="container">
@@ -1195,52 +1640,124 @@ jupyter lab
     <div class="resource-grid">
       <div class="resource-card">
         <div class="resource-type rt-free">FREE · Interactive</div>
-        <h5>Kaggle Learn — Python</h5>
+        <h5><a href="https://www.kaggle.com/learn/python" target="_blank" rel="noopener noreferrer">Kaggle Learn — Python</a></h5>
         <p>7 short modules covering Python basics. Beginner-perfect. Run in browser, no setup needed.</p>
-        <span class="resource-time">⏱ ~5 hours</span>
+        <span class="resource-time">⏱ ~5 hours</span><span class="resource-difficulty diff-beginner">Beginner</span>
       </div>
       <div class="resource-card">
         <div class="resource-type rt-free">FREE · Interactive</div>
-        <h5>Kaggle Learn — Pandas</h5>
+        <h5><a href="https://www.kaggle.com/learn/pandas" target="_blank" rel="noopener noreferrer">Kaggle Learn — Pandas</a></h5>
         <p>6 hands-on exercises covering all Pandas you need for ML data manipulation.</p>
-        <span class="resource-time">⏱ ~4 hours</span>
+        <span class="resource-time">⏱ ~4 hours</span><span class="resource-difficulty diff-beginner">Beginner</span>
       </div>
       <div class="resource-card">
         <div class="resource-type rt-video">FREE · Video</div>
-        <h5>StatQuest with Josh Starmer</h5>
+        <h5><a href="https://www.youtube.com/@statquest" target="_blank" rel="noopener noreferrer">StatQuest with Josh Starmer</a></h5>
         <p>YouTube channel. Covers every core ML concept with crystal-clear visual explanations. Must-watch.</p>
-        <span class="resource-time">⏱ ~10 hours (selected)</span>
+        <span class="resource-time">⏱ ~10 hours (selected)</span><span class="resource-difficulty diff-beginner">Beginner</span>
       </div>
       <div class="resource-card">
         <div class="resource-type rt-free">FREE · Interactive</div>
-        <h5>Kaggle Learn — Intro to ML</h5>
+        <h5><a href="https://www.kaggle.com/learn/intro-to-machine-learning" target="_blank" rel="noopener noreferrer">Kaggle Learn — Intro to ML</a></h5>
         <p>scikit-learn focused. 7 lessons covering decision trees, validation, and underfitting/overfitting.</p>
-        <span class="resource-time">⏱ ~3 hours</span>
+        <span class="resource-time">⏱ ~3 hours</span><span class="resource-difficulty diff-beginner">Beginner</span>
       </div>
       <div class="resource-card">
         <div class="resource-type rt-book">FREE · Reference</div>
-        <h5>scikit-learn User Guide</h5>
+        <h5><a href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noopener noreferrer">scikit-learn User Guide</a></h5>
         <p>Official documentation. Bookmark it. The "Examples" section is invaluable. Read alongside coding.</p>
-        <span class="resource-time">⏱ Reference — ongoing</span>
+        <span class="resource-time">⏱ Reference — ongoing</span><span class="resource-difficulty diff-intermediate">Reference</span>
       </div>
       <div class="resource-card">
         <div class="resource-type rt-video">FREE · Video</div>
-        <h5>Google ML Crash Course</h5>
+        <h5><a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener noreferrer">Google ML Crash Course</a></h5>
         <p>15 hours of structured ML theory. Covers gradient descent, neural nets preview, feature engineering.</p>
-        <span class="resource-time">⏱ ~15 hours (optional deep-dives)</span>
+        <span class="resource-time">⏱ ~15 hours (optional deep-dives)</span><span class="resource-difficulty diff-optional">Optional</span>
       </div>
       <div class="resource-card">
         <div class="resource-type rt-free">FREE · Practice</div>
-        <h5>Kaggle Competitions (Beginner)</h5>
+        <h5><a href="https://www.kaggle.com/competitions?hostSegmentIdFilter=8" target="_blank" rel="noopener noreferrer">Kaggle Competitions (Beginner)</a></h5>
         <p>Titanic, House Prices, Digit Recognizer. Real datasets with leaderboards and public notebooks to learn from.</p>
-        <span class="resource-time">⏱ Open-ended</span>
+        <span class="resource-time">⏱ Open-ended</span><span class="resource-difficulty diff-intermediate">Practice</span>
       </div>
       <div class="resource-card">
-        <div class="resource-type rt-book">FREE · Book</div>
-        <h5>Hands-On ML with Scikit-Learn (Aurélien Géron)</h5>
-        <p>The definitive ML textbook. Use as reference, not cover-to-cover. Chapters 1-8 align with this plan.</p>
-        <span class="resource-time">⏱ ~8 hours (selected chapters)</span>
+        <div class="resource-type rt-book">Book · Free code</div>
+        <h5><a href="https://github.com/ageron/handson-ml3" target="_blank" rel="noopener noreferrer">Hands-On ML with Scikit-Learn (Aurélien Géron)</a></h5>
+        <p>The textbook pairs with free official notebooks. Use as reference, not cover-to-cover. Chapters 1-8 align with this plan.</p>
+        <span class="resource-time">⏱ ~8 hours (selected chapters)</span><span class="resource-difficulty diff-deep">Deep Dive</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <div class="section-label">// publish-ready</div>
+    <div class="section-title">Portfolio Checklist</div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <h5>Repository Structure</h5>
+        <ul><li>`README.md` with project summary</li><li>`notebooks/` for exploration</li><li>`src/` for reusable code</li><li>`models/` ignored or documented if large</li></ul>
+      </div>
+      <div class="portfolio-card">
+        <h5>Notebook Polish</h5>
+        <ul><li>Clear markdown before each major step</li><li>No broken cells or hidden errors</li><li>Charts have titles and axis labels</li><li>Random seeds set where useful</li></ul>
+      </div>
+      <div class="portfolio-card">
+        <h5>Results Snapshot</h5>
+        <ul><li>Baseline score and final score</li><li>Chosen metric and why it fits</li><li>Top features or error analysis</li><li>Known limitations</li></ul>
+      </div>
+      <div class="portfolio-card">
+        <h5>Recruiter-Friendly README</h5>
+        <ul><li>Problem in one paragraph</li><li>Dataset link and business context</li><li>How to run locally</li><li>Final model result in plain English</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT -->
+<section id="deploy">
+  <div class="container">
+    <div class="section-label">// optional shipping path</div>
+    <div class="section-title">Deployment Path</div>
+    <div class="deployment-grid">
+      <div class="deployment-card">
+        <h5>Streamlit Demo</h5>
+        <p>Best first deployment path for tabular ML dashboards and portfolio demos.</p>
+        <ul><li>Create `app.py`</li><li>Load the saved pipeline</li><li>Add input widgets</li><li>Deploy with Community Cloud</li></ul>
+        <a href="https://streamlit.io/" target="_blank" rel="noopener noreferrer">Open Streamlit</a>
+      </div>
+      <div class="deployment-card">
+        <h5>Gradio Prototype</h5>
+        <p>Great for quick ML interfaces where users submit inputs and see predictions immediately.</p>
+        <ul><li>Build an `Interface`</li><li>Wrap prediction function</li><li>Add examples</li><li>Share the public link</li></ul>
+        <a href="https://www.gradio.app/" target="_blank" rel="noopener noreferrer">Open Gradio</a>
+      </div>
+      <div class="deployment-card">
+        <h5>FastAPI Service</h5>
+        <p>Use when the model should behave like a backend API instead of an interactive notebook.</p>
+        <ul><li>Create `/predict` route</li><li>Validate input schema</li><li>Return JSON predictions</li><li>Add a small test request</li></ul>
+        <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">Open FastAPI</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="container">
+    <div class="section-label">// plain english reference</div>
+    <div class="section-title">ML Glossary</div>
+    <div class="glossary-grid">
+      <div class="glossary-card"><h5>Feature</h5><p>An input column the model uses to make a prediction.</p></div>
+      <div class="glossary-card"><h5>Label</h5><p>The target value the model is trying to predict.</p></div>
+      <div class="glossary-card"><h5>Model</h5><p>A learned pattern that maps features to predictions.</p></div>
+      <div class="glossary-card"><h5>Loss</h5><p>A number that tells the model how wrong its predictions are during training.</p></div>
+      <div class="glossary-card"><h5>Overfitting</h5><p>When a model memorizes training data and performs poorly on new data.</p></div>
+      <div class="glossary-card"><h5>Pipeline</h5><p>A repeatable chain of preprocessing steps and a model.</p></div>
+      <div class="glossary-card"><h5>Cross-Validation</h5><p>Repeated train/validation splits used to estimate model reliability.</p></div>
+      <div class="glossary-card"><h5>Baseline</h5><p>A simple first model used as the score to beat.</p></div>
     </div>
   </div>
 </section>
@@ -1249,18 +1766,18 @@ jupyter lab
 <section id="growth">
   <div class="container">
     <div class="section-label">// what comes next</div>
-    <div class="section-title">Condensed MVP + Long-Term Growth Path</div>
+    <div class="section-title">First Prototype + Long-Term Growth Path</div>
 
     <p style="color:var(--muted); font-size:13px; margin-bottom:32px; max-width:600px;">
-      Week 4 is your MVP milestone — you can build, evaluate, and deploy a basic ML model. Here's the road ahead:
+      Week 4 is your first prototype milestone — you can build, evaluate, and save a basic ML model. Here's the road ahead:
     </p>
 
     <div class="growth-path">
       <div class="growth-item">
         <div class="growth-dot">🏁</div>
         <div>
-          <h5>MVP Complete (After Week 4)</h5>
-          <p>You can: load data, preprocess, train + evaluate 6 algorithms, build a pipeline, save a model. Build 2–3 Kaggle projects to solidify skills.</p>
+          <h5>Prototype Complete (After Week 4)</h5>
+          <p>You can: load data, preprocess, train + evaluate 6 algorithms, build a pipeline, and save a model. Build 2–3 Kaggle projects to solidify skills.</p>
         </div>
       </div>
       <div class="growth-item">
@@ -1296,23 +1813,23 @@ jupyter lab
     <div class="setup-box" style="margin-top:40px;">
       <h4>📦 Recommended Package Versions (Full Summary)</h4>
       <div class="code-block">
-<span class="comment"># requirements.txt — pin these for reproducibility</span>
+<span class="comment"># requirements.txt — current starter pins checked May 2026</span>
 python==3.11.x
-numpy==1.26.4
-pandas==2.2.1
-matplotlib==3.8.3
+numpy==2.4.4
+pandas==3.0.2
+matplotlib==3.10.8
 seaborn==0.13.2
-scikit-learn==1.4.1
-jupyterlab==4.1.5
-joblib==1.3.2         <span class="comment"># for model saving</span>
+scikit-learn==1.8.0
+jupyterlab==4.5.6
+joblib==1.5.3         <span class="comment"># for model saving</span>
 
 <span class="comment"># Install command</span>
-pip install numpy==1.26.4 pandas==2.2.1 matplotlib==3.8.3 seaborn==0.13.2 scikit-learn==1.4.1 jupyterlab==4.1.5 joblib==1.3.2
+pip install numpy==2.4.4 pandas==3.0.2 matplotlib==3.10.8 seaborn==0.13.2 scikit-learn==1.8.0 jupyterlab==4.5.6 joblib==1.5.3
 
 <span class="comment"># Month 2 additions (after this plan)</span>
-xgboost==2.0.3
-lightgbm==4.3.0
-shap==0.45.0
+xgboost==3.2.0
+lightgbm==4.6.0
+shap==0.51.0
       </div>
     </div>
   </div>
@@ -1324,63 +1841,420 @@ shap==0.45.0
 </div>
 
 <script>
-  // Week tabs
-  function showWeek(n) {
-    document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('week' + n).classList.add('active');
-    document.querySelector('.tab-btn[data-w="' + n + '"]').classList.add('active');
+  const STORAGE_KEYS = {
+    theme: 'ml-theme',
+    progress: 'ml-progress',
+    notes: 'ml-day-notes',
+    startDate: 'ml-start-date'
+  };
+
+  function normalizeProgress(values) {
+    if (!Array.isArray(values)) return [];
+    return [...new Set(values.map(Number))]
+      .filter(n => Number.isInteger(n) && n >= 1 && n <= 28)
+      .sort((a, b) => a - b);
   }
 
-  // Scroll progress bar
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-    document.getElementById('scrollProgress').style.width = pct + '%';
+  function readJson(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function readProgress() {
+    return normalizeProgress(readJson(STORAGE_KEYS.progress, []));
+  }
+
+  function saveProgress(done) {
+    try {
+      localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(done));
+    } catch {
+      // Private browsing or locked-down storage should not break the page.
+    }
+  }
+
+  function readNotes() {
+    const notes = readJson(STORAGE_KEYS.notes, {});
+    return notes && typeof notes === 'object' && !Array.isArray(notes) ? notes : {};
+  }
+
+  function saveNotes(notes) {
+    try {
+      localStorage.setItem(STORAGE_KEYS.notes, JSON.stringify(notes));
+    } catch {
+      // Notes remain usable in the current session even if persistence is blocked.
+    }
+  }
+
+  function saveTextFile(filename, text, type = 'text/plain') {
+    const blob = new Blob([text], { type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function parseLocalDate(value) {
+    if (!value) return null;
+    const parts = value.split('-').map(Number);
+    if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+
+  function showWeek(n) {
+    document.querySelectorAll('.week-panel').forEach(panel => {
+      const isActive = panel.id === 'week' + n;
+      panel.classList.toggle('active', isActive);
+      panel.hidden = !isActive;
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(button => {
+      const isActive = button.dataset.w === String(n);
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-selected', String(isActive));
+      button.tabIndex = isActive ? 0 : -1;
+    });
+  }
+
+  document.querySelectorAll('.tab-btn').forEach((button, index, buttons) => {
+    button.addEventListener('click', () => {
+      if (typeof scheduleSearch !== 'undefined' && scheduleSearch?.value) scheduleSearch.value = '';
+      showWeek(Number(button.dataset.w));
+      applyScheduleTools();
+    });
+    button.addEventListener('keydown', event => {
+      const last = buttons.length - 1;
+      let nextIndex = index;
+
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = index === last ? 0 : index + 1;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = index === 0 ? last : index - 1;
+      else if (event.key === 'Home') nextIndex = 0;
+      else if (event.key === 'End') nextIndex = last;
+      else return;
+
+      event.preventDefault();
+      buttons[nextIndex].focus();
+      if (typeof scheduleSearch !== 'undefined' && scheduleSearch?.value) scheduleSearch.value = '';
+      showWeek(Number(buttons[nextIndex].dataset.w));
+      applyScheduleTools();
+    });
   });
 
-  // Theme toggle
+  const dayCards = Array.from(document.querySelectorAll('.day-card')).map(card => {
+    const label = card.querySelector('.day-num')?.textContent || '';
+    const day = Number(label.replace(/\D+/g, ''));
+    if (day) card.dataset.day = String(day);
+    return { card, day, title: card.querySelector('.day-title')?.textContent.trim() || 'Untitled' };
+  }).filter(item => item.day);
+
+  const dayTimePlan = [
+    '2h', '2h', '2h', '2h 15m', '2h 30m', '2h', '2h 30m',
+    '2h', '2h 30m', '2h 15m', '2h', '2h', '2h 15m', '3h',
+    '2h', '2h', '2h', '2h', '2h 15m', '2h', '3h',
+    '2h', '2h 30m', '2h', '2h', '2h', '4h', '2h'
+  ];
+
+  dayCards.forEach(({ card, day }) => {
+    const header = card.querySelector('.day-header');
+    if (header && !header.querySelector('.day-time')) {
+      const time = document.createElement('span');
+      time.className = 'day-time';
+      time.textContent = dayTimePlan[day - 1] || '2h';
+      header.appendChild(time);
+    }
+  });
+
+  document.querySelectorAll('.code-block').forEach((block, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-code';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy code block ' + (index + 1));
+    button.addEventListener('click', async () => {
+      const text = block.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'Copied';
+        setTimeout(() => { button.textContent = 'Copy'; }, 1200);
+      } catch {
+        button.textContent = 'Select text';
+        setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+      }
+    });
+    block.parentNode.insertBefore(button, block);
+  });
+
+  const noteState = readNotes();
+  const noteTextareas = new Map();
+  dayCards.forEach(({ card, day }) => {
+    const body = card.querySelector('.day-body');
+    if (!body) return;
+    const note = document.createElement('div');
+    note.className = 'day-note';
+    note.innerHTML = '<label for="day-note-' + day + '">Day Notes</label><textarea id="day-note-' + day + '" rows="3" placeholder="Key takeaway, blocker, or next action"></textarea>';
+    const textarea = note.querySelector('textarea');
+    textarea.value = noteState[day] || '';
+    textarea.addEventListener('input', () => {
+      noteState[day] = textarea.value;
+      saveNotes(noteState);
+    });
+    body.appendChild(note);
+    noteTextareas.set(day, textarea);
+  });
+
+  const scheduleSearch = document.getElementById('scheduleSearch');
+  const startDateInput = document.getElementById('startDate');
+  const clearScheduleTools = document.getElementById('clearScheduleTools');
+  const scheduleStatus = document.getElementById('scheduleStatus');
+
+  function currentActiveWeek() {
+    return Number(document.querySelector('.tab-btn.active')?.dataset.w || '1');
+  }
+
+  function updateTodayHighlight() {
+    const startDate = parseLocalDate(startDateInput?.value || '');
+    document.querySelectorAll('.today').forEach(el => el.classList.remove('today'));
+    if (!startDate) return null;
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const dayNumber = Math.floor((today - startDate) / 86400000) + 1;
+    if (dayNumber < 1 || dayNumber > 28) return null;
+
+    document.querySelector('.day-card[data-day="' + dayNumber + '"]')?.classList.add('today');
+    document.querySelector('.progress-day[data-day="' + dayNumber + '"]')?.classList.add('today');
+    return dayNumber;
+  }
+
+  function applyScheduleTools() {
+    const query = (scheduleSearch?.value || '').trim().toLowerCase();
+    let matches = 0;
+
+    dayCards.forEach(({ card }) => {
+      const isMatch = !query || card.textContent.toLowerCase().includes(query);
+      card.classList.toggle('is-hidden', !isMatch);
+      if (isMatch) matches++;
+    });
+
+    if (query) {
+      document.querySelectorAll('.week-panel').forEach(panel => {
+        panel.classList.add('active');
+        panel.hidden = false;
+      });
+      if (scheduleStatus) scheduleStatus.textContent = matches + ' day' + (matches === 1 ? '' : 's') + ' match "' + query + '".';
+    } else {
+      showWeek(currentActiveWeek());
+      if (scheduleStatus) scheduleStatus.textContent = 'Showing Week ' + currentActiveWeek() + '.';
+    }
+
+    updateTodayHighlight();
+  }
+
+  scheduleSearch?.addEventListener('input', applyScheduleTools);
+  startDateInput?.addEventListener('change', () => {
+    try {
+      if (startDateInput.value) localStorage.setItem(STORAGE_KEYS.startDate, startDateInput.value);
+      else localStorage.removeItem(STORAGE_KEYS.startDate);
+    } catch {
+      // Start date highlighting still works for the current view.
+    }
+    const dayNumber = updateTodayHighlight();
+    if (dayNumber && !scheduleSearch?.value) {
+      showWeek(Math.ceil(dayNumber / 7));
+      if (scheduleStatus) scheduleStatus.textContent = 'Showing Day ' + dayNumber + '.';
+    }
+  });
+  clearScheduleTools?.addEventListener('click', () => {
+    if (scheduleSearch) scheduleSearch.value = '';
+    if (startDateInput) startDateInput.value = '';
+    try { localStorage.removeItem(STORAGE_KEYS.startDate); } catch {}
+    applyScheduleTools();
+  });
+
+  try {
+    const savedStartDate = localStorage.getItem(STORAGE_KEYS.startDate);
+    if (savedStartDate && startDateInput) startDateInput.value = savedStartDate;
+  } catch {
+    // Ignore unavailable storage.
+  }
+  applyScheduleTools();
+  const initialCourseDay = updateTodayHighlight();
+  if (initialCourseDay && !scheduleSearch?.value) {
+    showWeek(Math.ceil(initialCourseDay / 7));
+    if (scheduleStatus) scheduleStatus.textContent = 'Showing Day ' + initialCourseDay + '.';
+  }
+
+  const scrollProgress = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const maxScroll = h.scrollHeight - h.clientHeight;
+    const pct = maxScroll > 0 ? (h.scrollTop / maxScroll) * 100 : 0;
+    if (scrollProgress) scrollProgress.style.width = pct + '%';
+  });
+
   function toggleTheme() {
     document.body.classList.toggle('light');
-    localStorage.setItem('ml-theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    try {
+      localStorage.setItem(STORAGE_KEYS.theme, document.body.classList.contains('light') ? 'light' : 'dark');
+    } catch {
+      // Theme still toggles even when persistence is unavailable.
+    }
   }
-  if (localStorage.getItem('ml-theme') === 'light') document.body.classList.add('light');
 
-  // Progress tracker
-  (function() {
+  try {
+    if (localStorage.getItem(STORAGE_KEYS.theme) === 'light') document.body.classList.add('light');
+  } catch {
+    // Ignore unavailable storage.
+  }
+
+  document.querySelector('.theme-toggle')?.addEventListener('click', toggleTheme);
+
+  (function initProgressTracker() {
     const track = document.getElementById('progressTrack');
     const fill = document.getElementById('progressFill');
     const summary = document.getElementById('progressSummary');
-    let done = JSON.parse(localStorage.getItem('ml-progress') || '[]');
-    const colors = ['w1','w1','w1','w1','w1','w1','w1','w2','w2','w2','w2','w2','w2','w2','w3','w3','w3','w3','w3','w3','w3','w4','w4','w4','w4','w4','w4','w4'];
-    for (let i = 1; i <= 28; i++) {
-      const el = document.createElement('div');
-      el.className = 'progress-day' + (done.includes(i) ? ' done' : '');
-      el.textContent = i;
-      el.title = 'Day ' + i;
-      el.onclick = () => {
-        if (done.includes(i)) done = done.filter(d => d !== i);
-        else done.push(i);
-        localStorage.setItem('ml-progress', JSON.stringify(done));
-        el.classList.toggle('done');
-        update();
-      };
-      track.appendChild(el);
+    const resetButton = document.getElementById('resetProgress');
+    const exportButton = document.getElementById('exportProgress');
+    const checklistButton = document.getElementById('exportChecklist');
+    const importButton = document.getElementById('importProgressButton');
+    const importInput = document.getElementById('importProgress');
+    if (!track || !fill || !summary) return;
+
+    let done = readProgress();
+    const dayButtons = [];
+
+    function setDayState(button, day) {
+      const isDone = done.includes(day);
+      button.classList.toggle('done', isDone);
+      button.setAttribute('aria-pressed', String(isDone));
+      button.setAttribute('aria-label', 'Day ' + day + (isDone ? ' complete' : ' not complete'));
     }
+
     function update() {
       const pct = Math.round((done.length / 28) * 100);
       fill.style.width = pct + '%';
       summary.innerHTML = 'Days completed: <span>' + done.length + '</span> / 28 — ' + pct + '% done';
+      dayButtons.forEach((button, index) => setDayState(button, index + 1));
     }
+
+    for (let i = 1; i <= 28; i++) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'progress-day';
+      button.textContent = i;
+      button.title = 'Day ' + i;
+      button.dataset.day = String(i);
+      button.setAttribute('aria-label', 'Day ' + i);
+      button.addEventListener('click', () => {
+        done = done.includes(i) ? done.filter(day => day !== i) : [...done, i].sort((a, b) => a - b);
+        saveProgress(done);
+        update();
+      });
+      track.appendChild(button);
+      dayButtons.push(button);
+    }
+
+    resetButton?.addEventListener('click', () => {
+      done = [];
+      saveProgress(done);
+      update();
+    });
+
+    exportButton?.addEventListener('click', () => {
+      const payload = {
+        completedDays: done,
+        totalDays: 28,
+        percentComplete: Math.round((done.length / 28) * 100),
+        notes: readNotes(),
+        startDate: startDateInput?.value || null,
+        exportedAt: new Date().toISOString()
+      };
+      saveTextFile('ml-progress.json', JSON.stringify(payload, null, 2), 'application/json');
+    });
+
+    checklistButton?.addEventListener('click', () => {
+      const notes = readNotes();
+      const lines = [
+        '# ML Zero to Hero Checklist',
+        '',
+        'Exported: ' + new Date().toLocaleString(),
+        ''
+      ];
+      dayCards.forEach(({ day, title }) => {
+        lines.push((done.includes(day) ? '- [x] ' : '- [ ] ') + 'Day ' + day + ': ' + title);
+        if (notes[day]) lines.push('  - Note: ' + notes[day].replace(/\s+/g, ' ').trim());
+      });
+      saveTextFile('ml-checklist.md', lines.join('\n'));
+    });
+
+    importButton?.addEventListener('click', () => importInput?.click());
+
+    importInput?.addEventListener('change', () => {
+      const file = importInput.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const payload = JSON.parse(String(reader.result || '{}'));
+          done = normalizeProgress(payload.completedDays || payload.progress || []);
+          saveProgress(done);
+
+          if (payload.notes && typeof payload.notes === 'object' && !Array.isArray(payload.notes)) {
+            Object.keys(noteState).forEach(key => delete noteState[key]);
+            Object.assign(noteState, payload.notes);
+            saveNotes(payload.notes);
+            noteTextareas.forEach(textarea => { textarea.value = ''; });
+            Object.entries(payload.notes).forEach(([day, text]) => {
+              const textarea = noteTextareas.get(Number(day));
+              if (textarea) textarea.value = String(text || '');
+            });
+          }
+
+          if (payload.startDate && startDateInput) {
+            startDateInput.value = payload.startDate;
+            try { localStorage.setItem(STORAGE_KEYS.startDate, payload.startDate); } catch {}
+          }
+
+          update();
+          applyScheduleTools();
+        } catch {
+          summary.innerHTML = 'Import failed: <span>invalid JSON</span>';
+        } finally {
+          importInput.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+
     update();
+    updateTodayHighlight();
   })();
 
-  // Smooth scroll for nav
-  document.querySelectorAll('.top-nav a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.addEventListener('beforeprint', () => {
+    document.querySelectorAll('.week-panel').forEach(panel => {
+      panel.hidden = false;
+    });
+  });
+
+  window.addEventListener('afterprint', () => {
+    const activeWeek = document.querySelector('.tab-btn.active')?.dataset.w || '1';
+    showWeek(Number(activeWeek));
+  });
+
+  document.querySelectorAll('.top-nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', event => {
+      event.preventDefault();
+      const target = document.querySelector(anchor.getAttribute('href'));
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (target) target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
 </script>
